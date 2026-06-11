@@ -1,2 +1,4 @@
-# e-core_front-end_administrador
-Este repositório foi desenvolvido para compor a camada de front-end do Projeto Integrador, sendo responsável pela página do administrador. Aqui estão implementadas as telas, componentes e funcionalidades visuais que permitem a interação com os serviços e recursos do sistema.
+# E-CORE FRONT-END PAGE ADMINISTRATIVA
+
+## Repositório principal 
+**Repositório do projeto integrador:** [clique aqui](https://github.com/KauanAlv/e-core_planejamentos)
