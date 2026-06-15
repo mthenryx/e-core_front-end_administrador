@@ -8,7 +8,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Inria+Sans:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&family=Inria+Serif:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Libre+Bodoni:ital,wght@0,400..700;1,400..700&display=swap" rel="stylesheet">  
     <link rel="stylesheet" href="./css/reset.css">
     <link rel="stylesheet" href="./css/login.css">
-    <script src="./js/main.js" defer></script>
+    <link rel="icon" type="image/png" href="./img/logo-empresa.png">
+    <script src="./js/login.js" defer></script>
     <title>Login</title>
 </head>
 <body>
@@ -32,7 +33,7 @@
                     <label for="e-mail">E-MAIL</label>
                     <div class="input-box">
                         <img src="./img/Account Male.png" alt="Icone de uma pessoa">
-                        <input type="text" name="" id="email" placeholder="Digite seu e-mail">
+                        <input type="text" maxlength="256" id="email" placeholder="Digite seu e-mail">
                     </div>
                 </div>
 
@@ -40,11 +41,11 @@
                     <label for="senha">SENHA</label>
                     <div class="input-box">
                         <img src="./img/Lock.png" alt="Icone de cadeado">
-                        <input type="text" name="" id="senha" placeholder="Digite sua senha">
+                        <input type="text" maxlength="70" id="senha" placeholder="Digite sua senha">
                     </div>
                 </div>
 
-                <button>ENTRAR</button>
+                <button onclick="validarLogin()">ENTRAR</button>
             </div>
         </div>
     </main>
