@@ -7,7 +7,13 @@
 //Tela de Login
 
 function validarEmailESenha(email, senha){
-
+    if(email == ""){
+        
+    }else if(senha == ""){
+        
+    }else{
+        return true
+    }
 }
 
 function validarLogin(){
@@ -15,19 +21,12 @@ function validarLogin(){
     const senha = document.getElementById("senha").value
 
     validarEmailESenha(email,senha)
+
+    if(){
+
+    }else{
+        window.location.href = "painel.html"
+    } 
 } 
 
-//Tela de Adicionar
-
-
-
-//Tela de Exibir
-
-
-
-//Tela de Atualizar
-
-
-
-//Tela de Alterar Cadastro
 

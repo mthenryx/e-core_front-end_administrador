@@ -1,0 +1,106 @@
+:root {
+    --color-1: #fff;
+    --color-2: #F5F7FA;
+    --color-3: #185FA5;
+    --color-4: #E6F1FB;
+    --color-5: #888888;
+    --color-6:#5A8AB5;
+    --color-7: #5A8AB5;
+    --color-8: #1776C4;
+    --color-9: #29A6E0;
+    --color-10: #D6F5E8;
+    --color-11: #0C3D6B;
+    --color-12: #A32D2D;   
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    font-family: "Inter", sans-serif;
+    width: 100vw;
+    min-height: 100vh;
+}
+
+header {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid rgba(128, 128, 128, 0.322);
+}
+
+header img {
+    width: auto;
+    height: 60px;
+}
+
+header h3 {
+    font-size: 14px;
+}
+
+header span {
+    font-size: 12px;
+    color: var(--color-5);
+}
+
+header a {
+    font-size: 14px;
+    font-weight: bold;
+    color: var(--color-6);
+    margin-right: 20px;
+}
+
+.block {
+    margin-left: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+main {
+    display: flex;
+    height: auto;
+    flex: 1;
+}
+
+.funcionalidades {
+    color: var(--color-5);
+    font-size: 13px;
+    margin-top: 30px;
+    gap: 10px;
+    display: flex;
+    flex-direction: column;
+    width: 15%;
+    padding: 10px;
+}
+
+.funcionalidades button {
+    border-radius: 15px;
+    border: none;
+    background-color: var(--color-1);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    padding: 10px;
+}
+
+.click {
+    background-color: var(--color-4);
+    color: var(--color-3);
+}
+
+.container {
+    width: 100%;
+    background-color: var(--color-2);
+}
+
+footer {
+    padding: 30px;
+    justify-content: center;
+    align-items: center;
+    gap: 7px;
+    display: flex;
+    flex-direction: column;
+    font-size: 13px;
+    color: var(--color-6);
+    background: linear-gradient(to right, #0C3D6B, #042C53);
+}
