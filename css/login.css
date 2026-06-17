@@ -11,15 +11,16 @@
 }
 
 body {
-    font-family: "Inter", sans-serif;
+font-family: "Inter", sans-serif;
     background-color: var(--color-7);
-    width: 100vw;
+    width: 100%;
+    min-height: 100vh; 
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    gap: 50px;
+    justify-content: center; 
+    align-items: center; 
     overflow: hidden;
+    margin: 0;
 }
 
 .circulo-topo-escuro {
@@ -71,8 +72,15 @@ header {
     display: flex;
     justify-content: center; 
     align-items: center;
-    margin-top: 100px;
-    width: 100vw;
+    width: 100%;
+    margin-bottom: 40px;
+}
+
+main {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-bottom: 80px; 
 }
 
 .seta {

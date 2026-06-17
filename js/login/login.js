@@ -1,62 +1,71 @@
 'use strict'
 
-//Todos os imports
+// Todos os imports
+import { postLoginInformacoes } from "../rotas/usuarios.js"
 
-import { postLoginInformacoes } from "./usuarios.js"
-
-//Tela de Login
+// Tela de Login
 
 function validarEmailESenha(email, senha) {
-    if (email == "") {
+    if (email === "") {
         Swal.fire({
-            title: 'Error!',
-            text: 'O campo do e-mail está vasio!',
+            title: 'Erro!',
+            text: 'O campo do e-mail está vazio!',
             icon: 'error',
-            confirmButtonText: 'ok'
+            confirmButtonText: 'Ok'
         })
-    } else if (senha == "") {
+        return false
+    } else if (senha === "") {
         Swal.fire({
-            title: 'Error!',
-            text: 'O campo da senha está vasio!',
+            title: 'Erro!',
+            text: 'O campo da senha está vazio!',
             icon: 'error',
-            confirmButtonText: 'ok'
+            confirmButtonText: 'Ok'
         })
+        return false
     } else {
-        return true
+        return true 
     }
 }
 
 window.validarLogin = async function () {
     const email = document.getElementById("email").value
-    const senha = document.getElementById("senha").valu
+    const senha = document.getElementById("senha").value
 
-    validarEmailESenha(email, senha)
+    if (!validarEmailESenha(email, senha)) {
+        return 
+    }
 
     const login = {
         "email": email,
         "senha": senha
     }
 
-    const authUser = await postLoginInformacoes(login)
+    try {
+        const authUser = await postLoginInformacoes(login)
+         
+        if (authUser.status === true) {
+            Swal.fire({
+                title: 'Sucesso!',
+                text: 'Logado com sucesso',
+                icon: 'success', 
+                confirmButtonText: 'Ok'
+            }).then(() => {
+                window.location.href = "painel.html"
+            })
+        } else if (authUser.status === false) {
+            exibirMensagemErro();
+        }
 
-    if (authUser) {
-        Swal.fire({
-            title: 'Sucess!',
-            text: 'Logado com sucesso',
-            icon: 'sucess',
-            confirmButtonText: 'ok'
-        })
-
-        window.location.href = "painel.html"
-
-    } else {
-        Swal.fire({
-            title: 'Error!',
-            text: 'Não foi possível fazer login com seu e-mail e senha.',
-            icon: 'error',
-            confirmButtonText: 'ok'
-        })
+    } catch (error) {
+        exibirMensagemErro();
     }
 }
 
-
+function exibirMensagemErro() {
+    Swal.fire({
+        title: 'Erro!',
+        text: 'Não foi possível fazer login com seu e-mail e senha.',
+        icon: 'error',
+        confirmButtonText: 'Ok'
+    })
+}
