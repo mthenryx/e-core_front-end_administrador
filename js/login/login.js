@@ -2,39 +2,61 @@
 
 //Todos os imports
 
-import {postLoginInformacoes} from "./usuarios.js"
-import {} from "./alert/alerts.js"
+import { postLoginInformacoes } from "./usuarios.js"
 
 //Tela de Login
 
-function validarEmailESenha(email, senha){
-    if(email == ""){
-        
-    }else if(senha == ""){
-        
-    }else{
+function validarEmailESenha(email, senha) {
+    if (email == "") {
+        Swal.fire({
+            title: 'Error!',
+            text: 'O campo do e-mail está vasio!',
+            icon: 'error',
+            confirmButtonText: 'ok'
+        })
+    } else if (senha == "") {
+        Swal.fire({
+            title: 'Error!',
+            text: 'O campo da senha está vasio!',
+            icon: 'error',
+            confirmButtonText: 'ok'
+        })
+    } else {
         return true
     }
 }
 
-async function validarLogin(){
+window.validarLogin = async function () {
     const email = document.getElementById("email").value
     const senha = document.getElementById("senha").valu
 
-    validarEmailESenha(email,senha)
+    validarEmailESenha(email, senha)
 
     const login = {
-                    "email": email,
-                    "senha": senha
-                }
-    
+        "email": email,
+        "senha": senha
+    }
+
     const authUser = await postLoginInformacoes(login)
 
-    if(authUser){
+    if (authUser) {
+        Swal.fire({
+            title: 'Sucess!',
+            text: 'Logado com sucesso',
+            icon: 'sucess',
+            confirmButtonText: 'ok'
+        })
+
         window.location.href = "painel.html"
-    }else{
-        
-    } 
-} 
+
+    } else {
+        Swal.fire({
+            title: 'Error!',
+            text: 'Não foi possível fazer login com seu e-mail e senha.',
+            icon: 'error',
+            confirmButtonText: 'ok'
+        })
+    }
+}
 
 
