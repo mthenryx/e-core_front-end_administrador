@@ -41,9 +41,12 @@ export async function putBebidas (id, contato) {
     return response.json()
 }
 
-export async function deleteBebidas (id) {
+export async function deleteBebidas(id, jwt) {
     const options = {
-        method: "DELETE"
+        method: "DELETE",
+        headers: {
+            Authorization: `Bearer ${jwt}`
+        }
     }
 
     const response = await fetch(`${url}/${id}`, options)

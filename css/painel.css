@@ -11,6 +11,8 @@
     --color-10: #D6F5E8;
     --color-11: #0C3D6B;
     --color-12: #A32D2D;   
+    --color-13: #D6F5E8;
+    --color-14: #E02929;
 }
 
 body {
@@ -168,6 +170,142 @@ h2 {
 .atualizar img, .deletar img {
     height: 95%;
     width: auto;
+}
+
+.alcoolico, .naoAlcoolico {
+    display: flex;
+    gap: 20px;
+}
+
+.carrossel-wrapper {
+    width: 700px;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+}
+
+.carrossel-track {
+    display: flex;
+    gap: 20px;
+    transition: transform 0.3s ease;
+    will-change: transform;
+}
+
+.carrossel {
+    display: flex;
+    gap: 20px;
+    overflow: hidden;
+    width: 700px; 
+}
+
+.box-drink {
+    box-sizing: border-box;
+    justify-content: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 150px;
+    gap: 15px;
+    width: 200px;
+    background-color: var(--color-13);
+    border-top-right-radius: 10px;
+    border-top-left-radius: 10px;
+}
+
+.box-drink span {
+    position: relative;
+    left: -60px;
+    color: var(--color-9);
+    font-weight: bold;
+    bottom: 5px;
+}
+
+.box-drink img {
+    height: 100px;
+    width: auto;
+}
+
+.info {
+    box-sizing: border-box;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    background-color: var(--color-1);
+    height: auto;
+    width: 200px;
+    border-bottom-right-radius: 10px;
+    border-bottom-left-radius: 10px;
+}
+
+.info h6{
+    color: var(--color-9);
+}
+
+.info h5{
+    font-size: 16px;
+    color: var(--color-11);
+}
+
+.info p {
+    max-width: 180px;
+    margin: 0 auto;
+    font-size: 12px;
+    color: var(--color-7);
+    text-align: center;
+}
+
+.valor {
+    font-weight: bold;
+    font-size: 16px;
+    color: var(--color-8);
+
+}
+
+.bt-atualizar {    
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--color-9);
+    height: 25px;
+    width: 40px;
+    border-radius: 15px;
+    border: none;
+}
+
+.bt-deletar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--color-14);
+    height: 25px;
+    width: 40px;
+    border-radius: 15px;
+    border: none;
+}
+
+.bt-atualizar:active {
+    transform: translate(1px, 1px);
+}
+
+.bt-deletar:active {
+    transform: translate(1px, 1px);
+}
+
+.box-botoes {
+    display: flex;
+    gap: 10px;
+}
+
+.card {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 20px;
+    min-height: 330px;
+    width: 180px;
 }
 
 footer {

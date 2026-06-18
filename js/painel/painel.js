@@ -28,9 +28,11 @@ async function criarTelaListaDeBebidas(){
     frase.className = "frase"
     
     const naoAlcoolico = document.createElement("div")
+    naoAlcoolico.id = "naoAlcoolico"
     naoAlcoolico.className = "naoAlcoolico"
 
     const alcoolico = document.createElement("div")
+    alcoolico.id = "alcoolico"
     alcoolico.className = "alcoolico"
 
     const tituloNaoAlcoolico = document.createElement("h3")
@@ -51,70 +53,70 @@ async function criarTelaListaDeBebidas(){
     btNaturais.className = "animation"
     btNaturais.textContent = "Naturais"
     btNaturais.addEventListener("click", () => {
-        await filtraCategoria()
+        filtraCategoria('Naturais')
     })
     
     const btIndustrializadas = document.createElement("button")
     btIndustrializadas.className = "animation"
     btIndustrializadas.textContent = "Industrializadas"
     btIndustrializadas.addEventListener("click", () => {
-        await filtraCategoria()
+        filtraCategoria('Industrializadas')
     })
 
     const btQuentes = document.createElement("button")
     btQuentes.className = "animation"
     btQuentes.textContent = "Quentes"
     btQuentes.addEventListener("click", () => {
-        await filtraCategoria()
+        filtraCategoria(Quentes)
     })
 
     const btFuncionais = document.createElement("button")
     btFuncionais.className = "animation"
     btFuncionais.textContent = "Funcionais"
     btFuncionais.addEventListener("click", () => {
-        await filtraCategoria()
+        filtraCategoria('Funcionais')
     })
 
     const btTodosNaoAlcoolica = document.createElement("button")
     btTodosNaoAlcoolica.className = "animation"
     btTodosNaoAlcoolica.textContent = "Todos"
     btTodosNaoAlcoolica.addEventListener("click", () => {
-        await filtraCategoria()
+        filtraCategoria('Todos Não Alcoolicos')
     })
 
     const btVinho = document.createElement("button")
     btVinho.className = "animation"
     btVinho.textContent = "Vinho"
     btVinho.addEventListener("click", () => {
-        await filtraCategoria()
+        filtraCategoria('Vinho')
     })
 
     const btCerveja = document.createElement("button")
     btCerveja.className = "animation"
     btCerveja.textContent = "Cerveja"
     btCerveja.addEventListener("click", () => {
-        await filtraCategoria()
+        filtraCategoria('Cerveja')
     })
 
     const btSidra = document.createElement("button")
     btSidra.className = "animation"
     btSidra.textContent = "Sidra"
     btSidra.addEventListener("click", () => {
-        await filtraCategoria()
+        filtraCategoria('Sidra')
     })
 
     const btHidromel = document.createElement("button")
     btHidromel.className = "animation"
     btHidromel.textContent = "Hidromel"
     btHidromel.addEventListener("click", () => {
-        await filtraCategoria()
+        filtraCategoria('Hidromel')
     })
 
     const btTodos = document.createElement("button")
     btTodos.className = "animation"
     btTodos.textContent = "Todos"
     btTodos.addEventListener("click", () => {
-        await filtraCategoria()
+        filtraCategoria('Todos Alcoolicas')
     })
 
     const carrosselNaoAlcoolica = document.createElement("div")
@@ -122,19 +124,47 @@ async function criarTelaListaDeBebidas(){
     carrosselNaoAlcoolica.id = "nao-alcoolica"
 
     const carrosselAlcoolica = document.createElement("div")
-    carrosselAlcoolica.className = "carrossel"
-    carrosselNaoAlcoolica.id = "alcoolica"
+    carrosselAlcoolica.className = "carrossel-track"
+    
+    const wrapper = document.createElement("div")
+    wrapper.className = "carrossel-wrapper"
+    
+    const btnLeft = document.createElement("button")
+    btnLeft.textContent = "<"
+    
+    const btnRight = document.createElement("button")
+    btnRight.textContent = ">"
+    
+    let offsetAlcoolica = 0
+    const cardWidth = 220 
+    
+    btnRight.addEventListener("click", () => {
+        const maxScroll = -(carrosselAlcoolica.scrollWidth - carrosselAlcoolica.parentElement.offsetWidth)
+    
+        if (offsetAlcoolica > maxScroll) {
+            offsetAlcoolica -= cardWidth
+            carrosselAlcoolica.style.transform = `translateX(${offsetAlcoolica}px)`
+        }
+    })
+    
+    btnLeft.addEventListener("click", () => {
+        if (offsetAlcoolica < 0) {
+            offsetAlcoolica += cardWidth
+            carrosselAlcoolica.style.transform = `translateX(${offsetAlcoolica}px)`
+        }
+    })
 
     categoriaAlcoolica.append(btNaturais, btIndustrializadas, btQuentes, btFuncionais, btTodosNaoAlcoolica)
     categoriaNaoAlcoolica.append(btVinho, btCerveja, btSidra, btHidromel, btTodos)
-    alcoolico.append(tituloAlcoolico, categoriaAlcoolica, carrosselAlcoolica)
+    wrapper.append(btnLeft, carrosselAlcoolica, btnRight)
+    alcoolico.append(tituloAlcoolico, categoriaAlcoolica, wrapper)
     naoAlcoolico.append(tituloNaoAlcoolico, categoriaNaoAlcoolica, carrosselNaoAlcoolica)
     container.append(h2, frase, naoAlcoolico, alcoolico)
 
     await criarCards()
 }
 
-function filtraCategoria(categoria){
+async function filtraCategoria(categoria){
 
 }
 
@@ -155,10 +185,9 @@ async function criarCards(){
             return
 
         } else {
-
-            for(let informacao of lista){
-
-                for(let foto_embalagem of informacao.foto_embalagem[0]){
+            for (let informacao of lista.response.bebida){
+                
+                for(let foto_embalagem of informacao.foto_embalagem){
 
                     const card = document.createElement("div")
                     card.className = "card"
@@ -177,7 +206,7 @@ async function criarCards(){
                     litragem.className = "litragem"
 
                     const marca = document.createElement("h6")
-                    marca.textContent = informacao.marca[0].nome
+                    marca.textContent = informacao.marca[0].nome_marca
                     marca.className = "marca"
 
                     const nome = document.createElement("h5")
@@ -189,7 +218,7 @@ async function criarCards(){
                     descricao.className = "descricao"
 
                     const valor = document.createElement("span")
-                    valor.textContent = foto_embalagem.valor     
+                    valor.textContent = `R$ ${foto_embalagem.valor}`    
                     valor.className = "valor"
 
                     const botoes = document.createElement("div")
@@ -212,15 +241,21 @@ async function criarCards(){
                     imgLapis.src = "./img/Pencil.png"
                     
                     const imgLixeira = document.createElement("img")
-                    imgLapis.className = "imgLixeira"
-                    imgLixeira.src = "./img/Lock.png"
+                    imgLixeira.className = "imgLixeira"
+                    imgLixeira.src = "./img/Remove.png"
 
-                    btDeletar.appendChild(imgLapis)
-                    btAtualizar.appendChild(imgLixeira)
+                    btDeletar.appendChild(imgLixeira)
+                    btAtualizar.appendChild(imgLapis)
                     botoes.append(btAtualizar, btDeletar)
                     info.append(marca, nome, descricao, valor, botoes)
                     boxDrinck.append(foto, litragem)
-                    card.appendChild(boxDrinck, info)
+                    card.append(boxDrinck, info)
+
+                    if(informacao.caracteristica[0].nome == "alcoólica"){
+                        alcoolico.append(card)
+                    }else{
+                        naoAlcoolico.append(card)
+                    }
                 }
             }
         }
@@ -236,20 +271,22 @@ async function criarCards(){
 
 async function deletarBebida(id){
     try {
-        const deletando = await deleteBebidas(id)
+        const jwt = localStorage.getItem("jwt")
 
-        if(!deletando.status){
+        const deletando = await deleteBebidas(id, jwt)
+
+        if(!deletando){
             Swal.fire({
-                title: 'Erro!',
-                text: 'Não foi possível deletar a bebida!',
-                icon: 'error',
+                title: 'Sucess!',
+                text: 'Bebida deletada com sucesso!',
+                icon: 'success',
                 confirmButtonText: 'Ok'
             })
         }else{
             Swal.fire({
-                title: 'Sucess!',
-                text: 'Bebida deletada com sucesso!',
-                icon: 'sucess',
+                title: 'Erro!',
+                text: 'Não foi possível deletar a bebida!',
+                icon: 'error',
                 confirmButtonText: 'Ok'
             })
         }

@@ -45,14 +45,20 @@ window.validarLogin = async function () {
         const authUser = await postLoginInformacoes(login)
          
         if (authUser.status === true) {
+
+            const jwt = authUser.response.usuario.jwt
+        
+            localStorage.setItem("jwt", jwt)
+
             Swal.fire({
                 title: 'Sucesso!',
                 text: 'Logado com sucesso',
-                icon: 'success', 
+                icon: 'success',
                 confirmButtonText: 'Ok'
             }).then(() => {
                 window.location.href = "painel.html"
             })
+        
         } else if (authUser.status === false) {
                 Swal.fire({
                     title: 'Erro!',
