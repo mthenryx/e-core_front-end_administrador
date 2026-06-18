@@ -1,6 +1,7 @@
 'use strict'
 
 // Todos os imports
+
 import { postLoginInformacoes } from "../rotas/usuarios.js"
 
 // Tela de Login
@@ -53,19 +54,20 @@ window.validarLogin = async function () {
                 window.location.href = "painel.html"
             })
         } else if (authUser.status === false) {
-            exibirMensagemErro();
+                Swal.fire({
+                    title: 'Erro!',
+                    text: 'Não foi possível fazer login com seu e-mail e senha.',
+                    icon: 'error',
+                    confirmButtonText: 'Ok'
+                })
         }
 
     } catch (error) {
-        exibirMensagemErro();
-    }
-}
-
-function exibirMensagemErro() {
-    Swal.fire({
+        Swal.fire({
         title: 'Erro!',
         text: 'Não foi possível fazer login com seu e-mail e senha.',
         icon: 'error',
         confirmButtonText: 'Ok'
     })
+    }
 }
