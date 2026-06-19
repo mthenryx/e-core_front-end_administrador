@@ -14,13 +14,14 @@ export async function getBuscarCaracteristica (id) {
     return response.json()
 }
 
-export async function postCaracteristica (contato) {
+export async function postCaracteristica (caracteristicas, jwt) {
     const options = {
         method: "POST",
         headers: {
-            "Content-Type": "application/json"
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${jwt}`
         },
-        body: JSON.stringify(contato)
+        body: JSON.stringify(caracteristicas)
     }
 
     const response = await fetch(url, options)
@@ -28,22 +29,26 @@ export async function postCaracteristica (contato) {
     return response.json()
 }
 
-export async function putCaracteristica (id, contato) {
+export async function putCaracteristica (id, caracteristicas, jwt) {
     const options = {
         method: "PUT",
         headers: {
-            "Content-Type": "application/json"
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${jwt}`
         },
-        body: JSON.stringify(contato)
+        body: JSON.stringify(caracteristicas)
     }
     const response = await fetch(`${url}/${id}`, options)
     if(!response.ok) throw new Error("Erro ao atualizar uma caracteristica!")
     return response.json()
 }
 
-export async function deleteCaracteristica (id) {
+export async function deleteCaracteristica (id, jwt) {
     const options = {
-        method: "DELETE"
+        method: "DELETE",
+        headers: {
+            "Authorization": `Bearer ${jwt}`
+        }
     }
 
     const response = await fetch(`${url}/${id}`, options)

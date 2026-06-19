@@ -14,13 +14,14 @@ export async function getBuscarCategoria (id) {
     return response.json()
 }
 
-export async function postCategoria (contato) {
+export async function postCategoria (categoria, jwt) {
     const options = {
         method: "POST",
         headers: {
-            "Content-Type": "application/json"
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${jwt}`
         },
-        body: JSON.stringify(contato)
+        body: JSON.stringify(categoria)
     }
 
     const response = await fetch(url, options)
@@ -28,22 +29,26 @@ export async function postCategoria (contato) {
     return response.json()
 }
 
-export async function putCategoria (id, contato) {
+export async function putCategoria (id, categoria, jwt) {
     const options = {
         method: "PUT",
         headers: {
-            "Content-Type": "application/json"
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${jwt}`
         },
-        body: JSON.stringify(contato)
+        body: JSON.stringify(categoria)
     }
     const response = await fetch(`${url}/${id}`, options)
     if(!response.ok) throw new Error("Erro ao atualizar uma categoria!")
     return response.json()
 }
 
-export async function deleteCategoria (id) {
+export async function deleteCategoria (id, jwt) {
     const options = {
-        method: "DELETE"
+        method: "DELETE",
+        headers: {
+            "Authorization": `Bearer ${jwt}`
+        }
     }
 
     const response = await fetch(`${url}/${id}`, options)

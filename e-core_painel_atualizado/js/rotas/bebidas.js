@@ -1,57 +1,57 @@
 'use strict'
 
-const url = "http://localhost:8080/v1/delicia-gelada/admin/marca"
+const url = "http://localhost:8080/v1/delicia-gelada/admin/bebida"
 
-export async function getListarMarcas () {
+export async function getListarBebidas () {
     const response = await fetch(url)
-    if(!response.ok) throw new Error("Erro ao listar marcas!")
+    if(!response.ok) throw new Error("Erro ao listar as bebidas!")
     return response.json()
 }
 
-export async function getBuscarMarca (id) {
+export async function getBuscarBebidas (id) {
     const response = await fetch(`${url}/${id}`)
-    if(!response.ok) throw new Error(`Erro ao buscar a marca: ${id}`)
+    if(!response.ok) throw new Error(`Erro ao buscar a bebida: ${id}`)
     return response.json()
 }
 
-export async function postMarca (marca, jwt) {
+export async function postBebidas (bebida, jwt) {
     const options = {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
             "Authorization": `Bearer ${jwt}`
         },
-        body: JSON.stringify(marca)
+        body: JSON.stringify(bebida)
     }
 
     const response = await fetch(url, options)
-    if(!response.ok) throw new Error("Erro ao criar uma nova marca")
+    if(!response.ok) throw new Error("Erro ao criar uma nova bebida")
     return response.json()
 }
 
-export async function putMarca (id, marca, jwt) {
+export async function putBebidas (id, bebida, jwt) {
     const options = {
         method: "PUT",
         headers: {
             "Content-Type": "application/json",
             "Authorization": `Bearer ${jwt}`
         },
-        body: JSON.stringify(marca)
+        body: JSON.stringify(bebida)
     }
     const response = await fetch(`${url}/${id}`, options)
-    if(!response.ok) throw new Error("Erro ao atualizar uma marca!")
+    if(!response.ok) throw new Error("Erro ao atualizar uma bebida!")
     return response.json()
 }
 
-export async function deleteMarca (id, jwt) {
+export async function deleteBebidas(id, jwt) {
     const options = {
         method: "DELETE",
         headers: {
             "Authorization": `Bearer ${jwt}`
-        },
+        }
     }
 
     const response = await fetch(`${url}/${id}`, options)
-    if (!response.ok) throw new Error("Erro ao deletar uma marca!")
+    if (!response.ok) throw new Error("Erro ao deletar uma bebida!")
     return true
 }

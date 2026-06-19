@@ -14,13 +14,14 @@ export async function getBuscarSabor (id) {
     return response.json()
 }
 
-export async function postSabor (contato) {
+export async function postSabor (sabor, jwt) {
     const options = {
         method: "POST",
         headers: {
-            "Content-Type": "application/json"
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${jwt}`
         },
-        body: JSON.stringify(contato)
+        body: JSON.stringify(sabor)
     }
 
     const response = await fetch(url, options)
@@ -28,22 +29,26 @@ export async function postSabor (contato) {
     return response.json()
 }
 
-export async function putSabor (id, contato) {
+export async function putSabor (id, sabor, jwt) {
     const options = {
         method: "PUT",
         headers: {
-            "Content-Type": "application/json"
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${jwt}`
         },
-        body: JSON.stringify(contato)
+        body: JSON.stringify(sabor)
     }
     const response = await fetch(`${url}/${id}`, options)
     if(!response.ok) throw new Error("Erro ao atualizar um sabor!")
     return response.json()
 }
 
-export async function deleteSabor (id) {
+export async function deleteSabor (id, jwt) {
     const options = {
-        method: "DELETE"
+        method: "DELETE",
+        headers: {
+            "Authorization": `Bearer ${jwt}`
+        },
     }
 
     const response = await fetch(`${url}/${id}`, options)

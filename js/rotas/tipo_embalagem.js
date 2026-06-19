@@ -14,13 +14,14 @@ export async function getBuscarTipoEmbalagem (id) {
     return response.json()
 }
 
-export async function postTipoEmbalagem (contato) {
+export async function postTipoEmbalagem (tipoEmbalagem, jwt) {
     const options = {
         method: "POST",
         headers: {
-            "Content-Type": "application/json"
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${jwt}`
         },
-        body: JSON.stringify(contato)
+        body: JSON.stringify(tipoEmbalagem)
     }
 
     const response = await fetch(url, options)
@@ -28,22 +29,26 @@ export async function postTipoEmbalagem (contato) {
     return response.json()
 }
 
-export async function putTipoEmbalagem (id, contato) {
+export async function putTipoEmbalagem (id, tipoEmbalagem, jwt) {
     const options = {
         method: "PUT",
         headers: {
-            "Content-Type": "application/json"
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${jwt}`
         },
-        body: JSON.stringify(contato)
+        body: JSON.stringify(tipoEmbalagem)
     }
     const response = await fetch(`${url}/${id}`, options)
     if(!response.ok) throw new Error("Erro ao atualizar um tipo de embalagem!")
     return response.json()
 }
 
-export async function deleteTipoEmbalagem (id) {
+export async function deleteTipoEmbalagem (id, jwt) {
     const options = {
-        method: "DELETE"
+        method: "DELETE",
+        headers: {
+            "Authorization": `Bearer ${jwt}`
+        },
     }
 
     const response = await fetch(`${url}/${id}`, options)

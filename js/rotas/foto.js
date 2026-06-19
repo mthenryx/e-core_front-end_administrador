@@ -14,36 +14,41 @@ export async function getBuscarFotos (id) {
     return response.json()
 }
 
-export async function postFoto (contato) {
+export async function postFoto (foto, jwt) {
     const options = {
         method: "POST",
         headers: {
-            "Content-Type": "application/json"
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${jwt}`
         },
-        body: JSON.stringify(contato)
+        body: JSON.stringify(foto)
     }
 
     const response = await fetch(url, options)
-    if(!response.ok) throw new Error("Erro ao criar uma nova fotot")
+    if(!response.ok) throw new Error("Erro ao criar uma nova foto")
     return response.json()
 }
 
-export async function putFoto (id, contato) {
+export async function putFoto (id, foto, jwt) {
     const options = {
         method: "PUT",
         headers: {
-            "Content-Type": "application/json"
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${jwt}`
         },
-        body: JSON.stringify(contato)
+        body: JSON.stringify(foto)
     }
     const response = await fetch(`${url}/${id}`, options)
     if(!response.ok) throw new Error("Erro ao atualizar uma foto!")
     return response.json()
 }
 
-export async function deleteFoto (id) {
+export async function deleteFoto (id, jwt) {
     const options = {
-        method: "DELETE"
+        method: "DELETE",
+        headers: {
+            "Authorization": `Bearer ${jwt}`
+        },
     }
 
     const response = await fetch(`${url}/${id}`, options)

@@ -14,13 +14,14 @@ export async function getBuscarBebidas (id) {
     return response.json()
 }
 
-export async function postBebidas (contato) {
+export async function postBebidas (bebida) {
     const options = {
         method: "POST",
         headers: {
-            "Content-Type": "application/json"
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${jwt}`
         },
-        body: JSON.stringify(contato)
+        body: JSON.stringify(bebida)
     }
 
     const response = await fetch(url, options)
@@ -28,13 +29,14 @@ export async function postBebidas (contato) {
     return response.json()
 }
 
-export async function putBebidas (id, contato) {
+export async function putBebidas (id, bebida, jwt) {
     const options = {
         method: "PUT",
         headers: {
-            "Content-Type": "application/json"
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${jwt}`
         },
-        body: JSON.stringify(contato)
+        body: JSON.stringify(bebida)
     }
     const response = await fetch(`${url}/${id}`, options)
     if(!response.ok) throw new Error("Erro ao atualizar uma bebida!")
@@ -45,7 +47,7 @@ export async function deleteBebidas(id, jwt) {
     const options = {
         method: "DELETE",
         headers: {
-            Authorization: `Bearer ${jwt}`
+            "Authorization": `Bearer ${jwt}`
         }
     }
 
