@@ -4,13 +4,13 @@
     --color-3: #185FA5;
     --color-4: #E6F1FB;
     --color-5: #888888;
-    --color-6:#5A8AB5;
+    --color-6: #5A8AB5;
     --color-7: #5A8AB5;
     --color-8: #1776C4;
     --color-9: #29A6E0;
     --color-10: #D6F5E8;
     --color-11: #0C3D6B;
-    --color-12: #A32D2D;   
+    --color-12: #A32D2D;
     --color-13: #D6F5E8;
     --color-14: #E02929;
 }
@@ -99,16 +99,19 @@ main {
     width: 100%;
     background-color: var(--color-2);
     padding: 15px;
+    font-family: "Inter", sans-serif;
 }
 
-.naoAlcoolico, .alcoolico  {
+.naoAlcoolico,
+.alcoolico {
     margin-top: 20px;
     display: flex;
     flex-direction: column;
     gap: 20px;
 }
 
-.categoria-nao-alcoolica, .categoria-alcoolica  {
+.categoria-nao-alcoolica,
+.categoria-alcoolica {
     display: flex;
     gap: 2vw;
 }
@@ -122,7 +125,8 @@ h2 {
     color: var(--color-5);
 }
 
-.titulo-nao-alcoolico, .titulo-alcoolico {
+.titulo-nao-alcoolico,
+.titulo-alcoolico {
     color: var(--color-9);
     font-size: 20px;
 }
@@ -144,12 +148,14 @@ h2 {
     transform: translateY(2px);
 }
 
-.alcoolico, .naoAlcoolico {
+.alcoolico,
+.naoAlcoolico {
     display: flex;
     gap: 20px;
 }
 
-.wrapperAlcoolico, .wrapperNaoAlcoolico {
+.wrapperAlcoolico,
+.wrapperNaoAlcoolico {
     max-width: 1100px;
     margin: 0 30px 25px;
     padding: 20px 10px;
@@ -199,12 +205,12 @@ h2 {
     border-bottom-left-radius: 10px;
 }
 
-.info h6{
+.info h6 {
     text-align: center;
     color: var(--color-9);
 }
 
-.info h5{
+.info h5 {
     text-align: center;
     font-size: 16px;
     color: var(--color-11);
@@ -225,7 +231,7 @@ h2 {
 
 }
 
-.bt-atualizar {    
+.bt-atualizar {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -523,6 +529,233 @@ footer {
     background-color: var(--color-9);
 }
 
+/* Tela de inserir bebida*/
+
+.bebidaCadastroGridDois {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 22px;
+  max-width: 710px;
+  margin-bottom: 18px;
+}
+
+.bebidaCadastroPreviewImg {
+    padding: 10px;
+    width: auto;
+    height: 80px;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+.bebidaCadastroBox {
+    width: min(100%, 1160px);
+    margin: 0 auto;
+    padding: 0;
+    font-family: Arial, Helvetica, sans-serif;
+    color: #222;
+}
+
+.bebidaCadastroTitulo {
+    margin: 0 0 4px;
+    font-size: 16px;
+    font-weight: 700;
+}
+
+.bebidaCadastroSubtitulo {
+    font-weight: 500;
+    margin: 0 0 22px;
+    font-size: 15px;
+    color: #8b8b8b;
+}
+
+.bebidaCadastroCard {
+    border: 1px solid #e4edf7;
+    border-radius: 12px;
+    padding: 18px 26px 22px;
+    margin-bottom: 20px;
+    background: #fff;
+}
+
+.bebidaCadastroCardTitulo {
+    color: #0765bd;
+    font-size: 15px;
+    font-weight: 700;
+    margin-bottom: 12px;
+}
+
+.bebidaCadastroLinha {
+    height: 1px;
+    background: #edf2f7;
+    margin-bottom: 16px;
+}
+
+.bebidaCadastroLabel {
+    display: block;
+    margin: 0 0 7px;
+    font-size: 14px;
+    font-weight: 700;
+    color: #5b5b5b;
+}
+
+.bebidaCadastroInput,
+.bebidaCadastroTextarea,
+.bebidaCadastroSelect,
+.bebidaCadastroPrecoBox {
+    width: 100%;
+    border: 1px solid #bdd8f1;
+    border-radius: 8px;
+    background: #fff;
+    color: #222;
+    font-size: 15px;
+    outline: none;
+    box-sizing: border-box;
+}
+
+.bebidaCadastroInput,
+.bebidaCadastroSelect,
+.bebidaCadastroPrecoBox {
+    height: 42px;
+}
+
+.bebidaCadastroInput {
+    padding: 0 12px;
+    margin-bottom: 12px;
+}
+
+.bebidaCadastroTextarea {
+    height: 86px;
+    resize: none;
+    padding: 12px;
+    margin-bottom: 12px;
+}
+
+.bebidaCadastroSelect {
+    max-width: 540px;
+    padding: 0 12px;
+    margin-bottom: 20px;
+}
+
+.bebidaCadastroDescartar {
+    height: 38px;
+    border: none;
+    background: transparent;
+    color: #b42323;
+    font-size: 15px;
+    cursor: pointer;
+    padding-right: 80%;
+}
+
+.bebidaCadastroFile {
+    display: none;
+}
+
+.bebidaCadastroUpload {
+    width: 100%;
+    height: 120px;
+    border: 2px dashed #cfe4f8;
+    border-radius: 10px;
+    background: #f8fbff;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 10px;
+    font-weight: 100;
+}
+
+.bebidaCadastroUploadFrase {
+    color: #666666;
+}
+
+.bebidaCadastroUploadIcon {
+    color: #b8b8b8;
+    font-size: 28px;
+    line-height: 1;
+    font-weight: 900;
+}
+
+.bebidaCadastroUploadImageIcon {
+    color: #c6c6c6;
+    font-size: 12px;
+    line-height: 1;
+}
+
+.bebidaCadastroGridTres {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 22px;
+    margin-bottom: 18px;
+}
+
+.bebidaCadastroGridTres .bebidaCadastroSelect {
+    max-width: none;
+    margin-bottom: 0;
+}
+
+.bebidaCadastroPrecoBox {
+    display: flex;
+    align-items: center;
+    padding: 0 12px;
+}
+
+.bebidaCadastroPrecoBox span {
+    width: 32px;
+    color: #9aa4af;
+}
+
+.bebidaCadastroPrecoInput {
+    flex: 1;
+    min-width: 0;
+    border: none;
+    outline: none;
+    background: transparent;
+    font-size: 15px;
+}
+
+.bebidaCadastroGridDois {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 22px;
+    max-width: 710px;
+    margin-bottom: 18px;
+}
+
+.bebidaCadastroGridDois .bebidaCadastroSelect {
+    max-width: none;
+    margin-bottom: 0;
+}
+
+.bebidaCadastroAcoes {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 26px;
+}
+
+.bebidaCadastroDescartarTudo {
+    width: 142px;
+    height: 46px;
+    border: 1px solid #edf2f7;
+    border-radius: 8px;
+    background: #fff;
+    color: #b42323;
+    font-size: 15px;
+    cursor: pointer;
+}
+
+.bebidaCadastroSalvar {
+    width: 122px;
+    height: 48px;
+    border: none;
+    border-radius: 8px;
+    background: #1f66ad;
+    color: #fff;
+    font-size: 15px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
 @media (max-width: 900px) {
     .filtros-bebidas {
         grid-template-columns: repeat(2, minmax(120px, 1fr));
@@ -532,6 +765,19 @@ footer {
     .wrapperNaoAlcoolico,
     .carrossel-bebidas {
         padding-inline: 34px;
+    }
+
+    .bebidaCadastroCard {
+        padding: 16px;
+    }
+
+    .bebidaCadastroGridTres,
+    .bebidaCadastroGridDois {
+        grid-template-columns: 1fr;
+    }
+
+    .bebidaCadastroSelect {
+        max-width: none;
     }
 }
 

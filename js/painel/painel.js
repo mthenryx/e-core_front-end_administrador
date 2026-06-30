@@ -10,6 +10,7 @@ import {postMarca, getBuscarMarca, getListarMarcas, putMarca, deleteMarca} from 
 import {postSabor, getBuscarSabor, getListarSabores, putSabor, deleteSabor} from "../rotas/sabor.js"
 import {postTipoEmbalagem, getBuscarTipoEmbalagem, getListarTipoEmbalagem, putTipoEmbalagem, deleteTipoEmbalagem} from "../rotas/tipo_embalagem.js"
 import {postLoginInformacoes, postUsuario, getBuscarUsuario, getListarUsuario, putUsuario, deleteUsuario} from "../rotas/usuarios.js"
+import {uploadParaCloudinary} from "../rotas/cloudnary.js"
 
 //Tela lista de bebidas
 
@@ -21,11 +22,28 @@ let swiperAlcoolico = null
 const filtrosNaoAlcoolicos = ["Naturais", "Industrializadas", "Quentes", "Funcionais"]
 const filtrosAlcoolicos = ["Vinho", "Cerveja", "Sidra", "Hidromel"]
 
-async function criarTelaListaDeBebidas(){
-    const pagina = document.getElementById("telaBebidas")
-    pagina.className = "click"
+const telaBebidas = document.getElementById("telaBebidas")
+const telaAdd = document.getElementById("telaAdd")
+const telaAlterar = document.getElementById("telaAlterar")
+const container = document.getElementById("container")
 
-    const container = document.getElementById("container")
+telaBebidas.addEventListener("click", () => {
+    criarTelaListaDeBebidas();
+})
+
+telaAdd.addEventListener("click", () => {
+    criarTelaInserirBebidas();
+})
+
+telaAlterar.addEventListener("click", () => {
+    criarTelaAlterarCadastroUser();
+})
+
+async function criarTelaListaDeBebidas(){
+    telaBebidas.className = "click"
+    telaAlterar.classList.replace("click", "not-click")
+    telaAdd.classList.replace("click", "not-click")
+
     container.innerHTML = ""
 
     const h2 = document.createElement("h2")
@@ -377,7 +395,758 @@ criarTelaListaDeBebidas()
 //Tela de inserção de bebidas
 
 async function criarTelaInserirBebidas(){
+    telaAdd.className = "click"
+    telaBebidas.classList.replace("click", "not-click")
+    telaAlterar.classList.replace("click", "not-click")
+
+    container.innerHTML = ""
+
+    const bebidaCadastroBox = document.createElement("section");
+    bebidaCadastroBox.className = "bebidaCadastroBox"
+
+    const bebidaCadastroFormulario = document.createElement('div')
+ 
+    const titulo = document.createElement('h2')
+    titulo.className = 'bebidaCadastroTitulo'
+    titulo.textContent = 'Adicionar nova bebida'
+    bebidaCadastroFormulario.appendChild(titulo)
     
+    const subtitulo = document.createElement('p')
+    subtitulo.className = 'bebidaCadastroSubtitulo'
+    subtitulo.textContent = 'Preencha as informações abaixo para cadastrar um novo item no cardápio.'
+    bebidaCadastroFormulario.appendChild(subtitulo)
+    
+    const cardInfo = document.createElement('div')
+    cardInfo.className = 'bebidaCadastroCard'
+    cardInfo.setAttribute('data-bebida-card', '')
+    
+    const cardInfoTitulo = document.createElement('div')
+    cardInfoTitulo.className = 'bebidaCadastroCardTitulo'
+    cardInfoTitulo.textContent = 'ℹ️ Informações básicas'
+    cardInfo.appendChild(cardInfoTitulo)
+    
+    const cardInfoLinha = document.createElement('div')
+    cardInfoLinha.className = 'bebidaCadastroLinha'
+    cardInfo.appendChild(cardInfoLinha)
+    
+    const labelNome = document.createElement('label')
+    labelNome.className = 'bebidaCadastroLabel'
+    labelNome.textContent = 'Nome da bebida *'
+    cardInfo.appendChild(labelNome)
+    
+    const inputNome = document.createElement('input')
+    inputNome.className = 'bebidaCadastroInput'
+    inputNome.type = 'text'
+    cardInfo.appendChild(inputNome)
+    
+    const labelDescricao = document.createElement('label')
+    labelDescricao.className = 'bebidaCadastroLabel'
+    labelDescricao.textContent = 'Descrição *'
+    cardInfo.appendChild(labelDescricao)
+    
+    const textareaDescricao = document.createElement('textarea')
+    textareaDescricao.className = 'bebidaCadastroTextarea'
+    cardInfo.appendChild(textareaDescricao)
+    
+    const labelCategoria = document.createElement('label')
+    labelCategoria.className = 'bebidaCadastroLabel'
+    labelCategoria.textContent = 'Categoria *'
+    cardInfo.appendChild(labelCategoria)
+    
+    const selectCategoria = document.createElement('select')
+    selectCategoria.className = 'bebidaCadastroSelect'
+
+    await carregarCategoriasNoSelect(selectCategoria)
+
+    cardInfo.appendChild(selectCategoria)
+    
+    const btnDescartarInfo = document.createElement('button')
+    btnDescartarInfo.type = 'button'
+    btnDescartarInfo.className = 'bebidaCadastroDescartar'
+    btnDescartarInfo.setAttribute('data-descartar-card', '')
+    btnDescartarInfo.textContent = '🗑️ Descartar'
+    cardInfo.appendChild(btnDescartarInfo)
+    
+    bebidaCadastroFormulario.appendChild(cardInfo)
+    
+    const cardImagem = document.createElement('div')
+    cardImagem.className = 'bebidaCadastroCard'
+    cardImagem.setAttribute('data-bebida-card', '')
+    
+    const cardImagemTitulo = document.createElement('div')
+    cardImagemTitulo.className = 'bebidaCadastroCardTitulo'
+    cardImagemTitulo.textContent = '🖼️ Imagem do produto'
+    cardImagem.appendChild(cardImagemTitulo)
+    
+    const cardImagemLinha = document.createElement('div')
+    cardImagemLinha.className = 'bebidaCadastroLinha'
+    cardImagem.appendChild(cardImagemLinha)
+    
+    const inputFile = document.createElement('input')
+    inputFile.className = 'bebidaCadastroFile'
+    inputFile.type = 'file'
+    inputFile.accept = 'image/png,image/jpeg,image/webp'
+    cardImagem.appendChild(inputFile)
+    
+    const btnUpload = document.createElement('button')
+    btnUpload.type = 'button'
+    btnUpload.className = 'bebidaCadastroUpload'
+    btnUpload.setAttribute('aria-label', 'Selecionar imagem')
+    
+    const spanUploadIcon = document.createElement('span')
+    spanUploadIcon.className = 'bebidaCadastroUploadIcon'
+    spanUploadIcon.textContent = '⬆'
+    btnUpload.appendChild(spanUploadIcon)
+
+    const spanUploadImageIconFrase = document.createElement('span')
+    spanUploadImageIconFrase.className = 'bebidaCadastroUploadFrase'
+    spanUploadImageIconFrase.textContent = 'Arraste uma foto ou clique para fazer upload'
+    btnUpload.appendChild(spanUploadImageIconFrase)
+    
+    const spanUploadImageIcon = document.createElement('span')
+    spanUploadImageIcon.className = 'bebidaCadastroUploadImageIcon'
+    spanUploadImageIcon.textContent = 'PNG, JPG ou WEBP · máx. 5 MB · recomendado 800×800px'
+    btnUpload.appendChild(spanUploadImageIcon)
+    
+    cardImagem.appendChild(btnUpload)
+    
+    bebidaCadastroFormulario.appendChild(cardImagem)
+    
+    const cardPreco = document.createElement('div')
+    cardPreco.className = 'bebidaCadastroCard'
+    cardPreco.setAttribute('data-bebida-card', '')
+    
+    const cardPrecoTitulo = document.createElement('div')
+    cardPrecoTitulo.className = 'bebidaCadastroCardTitulo'
+    cardPrecoTitulo.textContent = '$ Preço, litragem e tipo embalagem'
+    cardPreco.appendChild(cardPrecoTitulo)
+    
+    const cardPrecoLinha = document.createElement('div')
+    cardPrecoLinha.className = 'bebidaCadastroLinha'
+    cardPreco.appendChild(cardPrecoLinha)
+    
+    const gridTres = document.createElement('div')
+    gridTres.className = 'bebidaCadastroGridTres'
+    
+    const colLitragem = document.createElement('div')
+    const labelLitragem = document.createElement('label')
+    labelLitragem.className = 'bebidaCadastroLabel'
+    labelLitragem.textContent = 'Litragem'
+    colLitragem.appendChild(labelLitragem)
+    
+    const selectLitragem = document.createElement('select')
+    selectLitragem.className = 'bebidaCadastroSelect'
+
+    const opcoes = [
+        "Selecione uma litragem",
+        "200 ml",
+        "220 ml",
+        "250 ml",
+        "269 ml",
+        "275 ml",
+        "300 ml",
+        "310 ml",
+        "330 ml",
+        "350 ml",
+        "355 ml",
+        "450 ml",
+        "473 ml",
+        "500 ml",
+        "600 ml",
+        "700 ml",
+        "750 ml",
+        "1 L",
+        "1,25 L",
+        "1,5 L",
+        "1,75 L",
+        "2 L",
+        "2,25 L",
+        "2,5 L",
+        "3 L",
+        "5 L"
+    ]
+
+    opcoes.forEach((texto, index) => {
+        const option = document.createElement("option")
+        option.value = texto
+        option.textContent = texto
+
+        if (index === 0) {
+            option.selected = true
+            option.disabled = true
+        }
+
+        selectLitragem.appendChild(option)
+    });
+
+    colLitragem.appendChild(selectLitragem)
+    
+    gridTres.appendChild(colLitragem)
+    
+    const colPreco = document.createElement('div')
+    const labelPreco = document.createElement('label')
+    labelPreco.className = 'bebidaCadastroLabel'
+    labelPreco.textContent = 'Preço *'
+    colPreco.appendChild(labelPreco)
+    
+    const precoBox = document.createElement('div')
+    precoBox.className = 'bebidaCadastroPrecoBox'
+    
+    const spanPrecoPrefixo = document.createElement('span')
+    spanPrecoPrefixo.textContent = 'R$'
+    precoBox.appendChild(spanPrecoPrefixo)
+    
+    const inputPreco = document.createElement('input')
+    inputPreco.className = 'bebidaCadastroPrecoInput'
+    inputPreco.type = 'text'
+    precoBox.appendChild(inputPreco)
+    
+    colPreco.appendChild(precoBox)
+    gridTres.appendChild(colPreco)
+    
+    const colEmbalagem = document.createElement('div')
+    const labelEmbalagem = document.createElement('label')
+    labelEmbalagem.className = 'bebidaCadastroLabel'
+    labelEmbalagem.textContent = 'Tipo embalagem'
+    colEmbalagem.appendChild(labelEmbalagem)
+    
+    const selectEmbalagem = document.createElement('select')
+    selectEmbalagem.className = 'bebidaCadastroSelect'
+
+    await carregarTiposEmbalagemNoSelect(selectEmbalagem)
+
+    colEmbalagem.appendChild(selectEmbalagem)
+    
+    gridTres.appendChild(colEmbalagem)
+    
+    cardPreco.appendChild(gridTres)
+    
+    const btnDescartarPreco = document.createElement('button')
+    btnDescartarPreco.type = 'button'
+    btnDescartarPreco.className = 'bebidaCadastroDescartar'
+    btnDescartarPreco.setAttribute('data-descartar-card', '')
+    btnDescartarPreco.textContent = '🗑️ Descartar'
+    cardPreco.appendChild(btnDescartarPreco)
+    
+    bebidaCadastroFormulario.appendChild(cardPreco)
+    
+    const cardGas = document.createElement('div')
+    cardGas.className = 'bebidaCadastroCard'
+    cardGas.setAttribute('data-bebida-card', '')
+    
+    const cardGasTitulo = document.createElement('div')
+    cardGasTitulo.className = 'bebidaCadastroCardTitulo'
+    cardGasTitulo.textContent = '🍾 Gaseificação e Alcoólico'
+    cardGas.appendChild(cardGasTitulo)
+    
+    const cardGasLinha = document.createElement('div')
+    cardGasLinha.className = 'bebidaCadastroLinha'
+    cardGas.appendChild(cardGasLinha)
+    
+    const gridDois = document.createElement('div')
+    gridDois.className = 'bebidaCadastroGridDois'
+    
+    const colGaseificada = document.createElement('div')
+    const labelGaseificada = document.createElement('label')
+    labelGaseificada.className = 'bebidaCadastroLabel'
+    labelGaseificada.textContent = 'Gaseificada'
+    colGaseificada.appendChild(labelGaseificada)
+    
+    const selectGaseificada = document.createElement('select')
+    selectGaseificada.className = 'bebidaCadastroSelect'
+
+    colGaseificada.appendChild(selectGaseificada)
+    
+    gridDois.appendChild(colGaseificada)
+    
+    const colAlcoolico = document.createElement('div')
+    const labelAlcoolico = document.createElement('label')
+    labelAlcoolico.className = 'bebidaCadastroLabel'
+    labelAlcoolico.textContent = 'Alcoólico'
+    colAlcoolico.appendChild(labelAlcoolico)
+    
+    const selectAlcoolico = document.createElement('select')
+    selectAlcoolico.className = 'bebidaCadastroSelect'
+
+    await carregarCaracteristicasNoSelect(selectGaseificada, selectAlcoolico)
+
+    colAlcoolico.appendChild(selectAlcoolico)
+    
+    gridDois.appendChild(colAlcoolico)
+    
+    cardGas.appendChild(gridDois)
+    
+    const btnDescartarGas = document.createElement('button')
+    btnDescartarGas.type = 'button'
+    btnDescartarGas.className = 'bebidaCadastroDescartar'
+    btnDescartarGas.setAttribute('data-descartar-card', '')
+    btnDescartarGas.textContent = '🗑️ Descartar'
+    cardGas.appendChild(btnDescartarGas)
+    
+    bebidaCadastroFormulario.appendChild(cardGas)
+    
+    const cardMarcaSabor = document.createElement('div')
+    cardMarcaSabor.className = 'bebidaCadastroCard'
+    cardMarcaSabor.setAttribute('data-bebida-card', '')
+
+    const cardMarcaSaborTitulo = document.createElement('div')
+    cardMarcaSaborTitulo.className = 'bebidaCadastroCardTitulo'
+    cardMarcaSaborTitulo.textContent = '🏷️ Marca e sabor'
+    cardMarcaSabor.appendChild(cardMarcaSaborTitulo)
+
+    const cardMarcaSaborLinha = document.createElement('div')
+    cardMarcaSaborLinha.className = 'bebidaCadastroLinha'
+    cardMarcaSabor.appendChild(cardMarcaSaborLinha)
+
+    const gridMarcaSabor = document.createElement('div')
+    gridMarcaSabor.className = 'bebidaCadastroGridDois'
+
+    const colMarca = document.createElement('div')
+
+    const labelMarca = document.createElement('label')
+    labelMarca.className = 'bebidaCadastroLabel'
+    labelMarca.textContent = 'Marca'
+    colMarca.appendChild(labelMarca)
+
+    const selectMarca = document.createElement('select')
+    selectMarca.className = 'bebidaCadastroSelect'
+
+    colMarca.appendChild(selectMarca)
+    gridMarcaSabor.appendChild(colMarca)
+
+    const colSabor = document.createElement('div')
+
+    const labelSabor = document.createElement('label')
+    labelSabor.className = 'bebidaCadastroLabel'
+    labelSabor.textContent = 'Sabor'
+    colSabor.appendChild(labelSabor)
+
+    const selectSabor = document.createElement('select')
+    selectSabor.className = 'bebidaCadastroSelect'
+
+    colSabor.appendChild(selectSabor)
+    gridMarcaSabor.appendChild(colSabor)
+
+    cardMarcaSabor.appendChild(gridMarcaSabor)
+
+    const btnDescartarMarcaSabor = document.createElement('button')
+    btnDescartarMarcaSabor.type = 'button'
+    btnDescartarMarcaSabor.className = 'bebidaCadastroDescartar'
+    btnDescartarMarcaSabor.setAttribute('data-descartar-card', '')
+    btnDescartarMarcaSabor.textContent = '🗑️ Descartar'
+    cardMarcaSabor.appendChild(btnDescartarMarcaSabor)
+
+    bebidaCadastroFormulario.appendChild(cardMarcaSabor)
+
+    await carregarMarcasNoSelect(selectMarca)
+    await carregarSaborNoSelect(selectSabor)
+
+    const acoes = document.createElement('div')
+    acoes.className = 'bebidaCadastroAcoes'
+    
+    const btnDescartarTudo = document.createElement('button')
+    btnDescartarTudo.type = 'button'
+    btnDescartarTudo.className = 'bebidaCadastroDescartarTudo'
+    btnDescartarTudo.textContent = '🗑️ Descartar'
+    acoes.appendChild(btnDescartarTudo)
+    
+    const btnSalvar = document.createElement('button')
+    btnSalvar.type = 'button'
+    btnSalvar.className = 'bebidaCadastroSalvar'
+    btnSalvar.textContent = '✓ Salvar'
+    btnSalvar.addEventListener("click", async () => {
+
+        if(
+            !inputNome.value.trim() ||
+            !textareaDescricao.value.trim() ||
+            !inputPreco.value.trim() ||
+            !imagemUrlCloudinary ||
+            !selectLitragem.value || selectLitragem.value === "Selecione uma litragem" ||
+            !selectCategoria.value || selectCategoria.value === "Selecione uma categoria" ||
+            !selectMarca.value || selectMarca.value === "Selecione uma marca" ||
+            !selectSabor.value || selectSabor.value === "Selecione uma sabor" ||
+            !selectGaseificada.value || selectGaseificada.value === "Selecione uma opção" ||
+            !selectAlcoolico.value || selectAlcoolico.value === "Selecione uma opção" ||
+            !selectEmbalagem.value || selectEmbalagem.value === "Selecione uma embalagem"
+        ){
+            Swal.fire({
+                title: 'Erro!',
+                text: 'Campos não foram preenchidos corretamente!',
+                icon: 'error',
+                confirmButtonText: 'Ok'
+            })
+        }else{
+            const bebida = {
+                nome: inputNome.value,
+                litragem: selectLitragem.value,
+                descricao: textareaDescricao.value,
+                id_categoria: Number(selectCategoria.value),
+                id_marca: Number(selectMarca.value),
+                id_sabor: Number(selectSabor.value),
+                caracteristica: [
+                    {id: Number(selectGaseificada.value)},
+                    {id: Number(selectAlcoolico.value)}
+                ],
+                foto_embalagem: [
+                    {
+                        foto: imagemUrlCloudinary,
+                        id_tipo_embalagem: Number(selectEmbalagem.value),
+                        valor: Number(inputPreco.value.replace(",", ".")),
+                    }
+                ]
+            }
+
+            const newBebida = await inserirBebidaNova(bebida)
+
+            if(newBebida.status){
+                Swal.fire({
+                    title: 'Sucesso!',
+                    text: 'Bebida cadastrada com sucesso!',
+                    icon: 'success',
+                    confirmButtonText: 'Ok'
+                }).then(() => {
+                    bebidaCadastroBox.querySelectorAll("input, textarea, select").forEach((campo) => {
+                        if (campo.type === "checkbox") {
+                            campo.checked = false
+                        } else {
+                            campo.value = ""
+                        }
+                    })
+
+                    imagemUrlCloudinary = ""
+                    bebidaCadastroUpload.innerHTML = ""
+                    bebidaCadastroUpload.appendChild(spanUploadIcon)
+                    bebidaCadastroUpload.appendChild(spanUploadImageIcon)
+                })
+
+            }else{
+                Swal.fire({
+                    title: 'Erro!',
+                    text: 'Não foi possível cadastrar essa bebida!',
+                    icon: 'error',
+                    confirmButtonText: 'Ok'
+                })
+            }
+        }
+    })
+
+    acoes.appendChild(btnSalvar)
+    
+    bebidaCadastroFormulario.appendChild(acoes)
+    bebidaCadastroBox.appendChild(bebidaCadastroFormulario)
+
+    const bebidaCadastroFile = bebidaCadastroBox.querySelector(".bebidaCadastroFile")
+    const bebidaCadastroUpload = bebidaCadastroBox.querySelector(".bebidaCadastroUpload")
+
+    let imagemUrlCloudinary = ""
+
+    bebidaCadastroUpload.addEventListener("click", () => {
+        bebidaCadastroFile.click()
+    })
+
+    bebidaCadastroFile.addEventListener("change", async () => {
+        const arquivo = bebidaCadastroFile.files[0]
+
+        if (!arquivo) return
+
+        try {
+            bebidaCadastroUpload.textContent = "Enviando..."
+
+            imagemUrlCloudinary = await uploadParaCloudinary(arquivo)
+
+            const imgPreview = document.createElement("img")
+            imgPreview.className = "bebidaCadastroPreviewImg"
+            imgPreview.src = imagemUrlCloudinary
+            imgPreview.alt = "Imagem da bebida"
+            bebidaCadastroUpload.innerHTML = ""
+            bebidaCadastroUpload.appendChild(imgPreview)
+        } catch (erro) {
+            Swal.fire({
+                title: 'Erro!',
+                text: 'Não foi possível enviar a Imagem!',
+                icon: 'error',
+                confirmButtonText: 'Ok'
+            })
+        }
+    })
+
+    bebidaCadastroBox.querySelectorAll("[data-descartar-card]").forEach((botao) => {
+    botao.addEventListener("click", () => {
+        const card = botao.closest("[data-bebida-card]")
+
+        card.querySelectorAll("input, textarea, select").forEach((campo) => {
+        if (campo.type === "checkbox") {
+            campo.checked = false
+        } else {
+            campo.value = ""
+        }
+        })
+    })
+    })
+
+    bebidaCadastroBox.querySelector(".bebidaCadastroDescartarTudo").addEventListener("click", () => {
+    bebidaCadastroBox.querySelectorAll("input, textarea, select").forEach((campo) => {
+        if (campo.type === "checkbox") {
+        campo.checked = false
+        } else {
+        campo.value = ""
+        }
+    })
+    })
+
+    container.appendChild(bebidaCadastroBox)
+}
+
+async function carregarCategoriasNoSelect(selectCategoria) {
+    try {
+        const categorias = await getListarCategoria()
+
+        if (categorias.status && categorias.response.categoria.length > 0) {
+            selectCategoria.innerHTML = ""
+
+            const optionVazia = document.createElement("option")
+            optionVazia.value = ""
+            optionVazia.textContent = "Selecione uma categoria"
+            optionVazia.selected = true
+            optionVazia.disabled = true
+            selectCategoria.appendChild(optionVazia)
+
+            categorias.response.categoria.forEach((categoria) => {
+                const option = document.createElement("option")
+
+                option.value = categoria.id
+                option.textContent = categoria.nome_categoria
+
+                selectCategoria.appendChild(option)
+            })
+
+            return categorias
+        } else {
+            Swal.fire({
+                title: 'Erro!',
+                text: 'Não foi possível listar as categorias, adicione novas, talvez funcione!',
+                icon: 'warning',
+                confirmButtonText: 'Ok'
+            })
+        }
+
+    } catch (error) {
+        Swal.fire({
+            title: 'Erro!',
+            text: 'Não foi possível listar as categorias!',
+            icon: 'error',
+            confirmButtonText: 'Ok'
+        })
+    }
+}
+
+async function carregarMarcasNoSelect(selectMarca) {
+    try {
+        const marcas = await getListarMarcas()
+
+        if (marcas.status && marcas.response.marca.length > 0) {
+            selectMarca.innerHTML = ""
+
+            const optionVazia = document.createElement("option")
+            optionVazia.value = ""
+            optionVazia.textContent = "Selecione uma marca"
+            optionVazia.selected = true
+            optionVazia.disabled = true
+            selectMarca.appendChild(optionVazia)
+
+            marcas.response.marca.forEach((marca) => {
+                const option = document.createElement("option")
+
+                option.value = marca.id
+                option.textContent = marca.nome_marca
+
+                selectMarca.appendChild(option)
+            })
+
+            return marcas
+        }else{
+            Swal.fire({
+                title: 'Erro!',
+                text: 'Não foi possível listar as marcas, adicione novas, talvez funcione!',
+                icon: 'warning',
+                confirmButtonText: 'Ok'
+            })
+        }
+
+    } catch (error) {
+        Swal.fire({
+            title: 'Erro!',
+            text: 'Não foi possível listar as marcas!',
+            icon: 'error',
+            confirmButtonText: 'Ok'
+        })
+    }
+}
+
+async function carregarSaborNoSelect(selectSabor) {
+    try {
+        const sabores = await getListarSabores()
+
+        if (sabores.status && sabores.response.sabor.length > 0) {
+            selectSabor.innerHTML = ""
+
+            const optionVazia = document.createElement("option")
+            optionVazia.value = ""
+            optionVazia.textContent = "Selecione um sabor"
+            optionVazia.selected = true
+            optionVazia.disabled = true
+            selectSabor.appendChild(optionVazia)
+
+            sabores.response.sabor.forEach((sabor) => {
+                const option = document.createElement("option")
+
+                option.value = sabor.id
+                option.textContent = sabor.nome_sabor
+
+                selectSabor.appendChild(option)
+            })
+
+            return sabores
+        }else{
+            Swal.fire({
+                title: 'Erro!',
+                text: 'Não foi possível listar os sabores, adicione novos, talvez funcione!',
+                icon: 'warning',
+                confirmButtonText: 'Ok'
+            })
+        }
+
+    } catch (error) {
+        Swal.fire({
+            title: 'Erro!',
+            text: 'Não foi possível listar os sabores!',
+            icon: 'error',
+            confirmButtonText: 'Ok'
+        })
+    }
+}
+
+async function carregarCaracteristicasNoSelect(selectGaseificada, selectAlcoolico) {
+    try {
+        const caracteristicas = await getListarCaracteristica()
+
+        if (caracteristicas.status && caracteristicas.response.caracteristica.length > 0) {
+            selectGaseificada.innerHTML = ""
+            selectAlcoolico.innerHTML = ""
+
+            const optionGasVazia = document.createElement("option")
+            optionGasVazia.value = ""
+            optionGasVazia.textContent = "Selecione uma opção"
+            optionGasVazia.selected = true
+            optionGasVazia.disabled = true
+            selectGaseificada.appendChild(optionGasVazia)
+
+            const optionAlcoolVazia = document.createElement("option")
+            optionAlcoolVazia.value = ""
+            optionAlcoolVazia.textContent = "Selecione uma opção"
+            optionAlcoolVazia.selected = true
+            optionAlcoolVazia.disabled = true
+            selectAlcoolico.appendChild(optionAlcoolVazia)
+
+            caracteristicas.response.caracteristica.forEach((caracteristica) => {
+                const nomeCaracteristica = caracteristica.nome.toLowerCase()
+
+                const option = document.createElement("option")
+                option.value = caracteristica.id
+                option.textContent = caracteristica.nome
+
+                if (
+                    nomeCaracteristica.includes("alcool") ||
+                    nomeCaracteristica.includes("álcool")
+                ) {
+                    selectAlcoolico.appendChild(option)
+                }
+
+                if (
+                    nomeCaracteristica.includes("gas") ||
+                    nomeCaracteristica.includes("gás") ||
+                    nomeCaracteristica.includes("gaseificada") ||
+                    nomeCaracteristica.includes("gaseificação")
+                ) {
+                    selectGaseificada.appendChild(option)
+                }
+            })
+
+            return caracteristicas
+        } else {
+            Swal.fire({
+                title: "Erro!",
+                text: "Não foi possível listar as características!",
+                icon: "warning",
+                confirmButtonText: "Ok"
+            })
+        }
+    } catch (error) {
+        Swal.fire({
+            title: "Erro!",
+            text: "Não foi possível listar as características!",
+            icon: "error",
+            confirmButtonText: "Ok"
+        })
+    }
+}
+
+async function carregarTiposEmbalagemNoSelect(selectEmbalagem) {
+    try {
+        const embalagens = await getListarTipoEmbalagem()
+
+        if (embalagens.status && embalagens.response.tipo_embalagem.length > 0) {
+            selectEmbalagem.innerHTML = ""
+
+            const optionVazia = document.createElement("option")
+            optionVazia.value = ""
+            optionVazia.textContent = "Selecione uma embalagem"
+            optionVazia.selected = true
+            optionVazia.disabled = true
+            selectEmbalagem.appendChild(optionVazia)
+
+            embalagens.response.tipo_embalagem.forEach((embalagem) => {
+                const option = document.createElement("option")
+
+                option.value = embalagem.id
+                option.textContent = embalagem.tipo_embalagem
+
+                selectEmbalagem.appendChild(option)
+            })
+
+            return embalagens
+        } else {
+            Swal.fire({
+                title: 'Erro!',
+                text: 'Não foi possível listar os tipos de embalagem!',
+                icon: 'warning',
+                confirmButtonText: 'Ok'
+            })
+        }
+
+    } catch (error) {
+        Swal.fire({
+            title: 'Erro!',
+            text: 'Não foi possível listar os tipos de embalagem!',
+            icon: 'error',
+            confirmButtonText: 'Ok'
+        })
+    }
+}
+
+async function inserirBebidaNova(bebida) {
+    try {
+        const bebibaNova = await postBebidas(bebida, jwt)
+        return bebibaNova
+
+    } catch (error) {
+        Swal.fire({
+            title: 'Erro!',
+            text: 'Não foi possível cadastrar à bebida!',
+            icon: 'error',
+            confirmButtonText: 'Ok'
+        })
+    }
 }
 
 //Tela de atualização de bebidas
@@ -388,10 +1157,15 @@ function criarTelaAtualizarBebidas(){
 
 //Tela de inserir e atualizar novo user
 
+function criarTelaAlterarCadastroUser(){
+    telaAlterar.className = "click"
+    telaBebidas.classList.replace("click", "not-click")
+    telaAdd.classList.replace("click", "not-click")
+
+    container.innerHTML = ""
+}
+
 function inserirCadastroUser(){
 
 }
 
-function criarTelaAlterarCadastroUser(){
-    
-}

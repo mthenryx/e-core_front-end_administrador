@@ -6,6 +6,27 @@ import { postLoginInformacoes } from "../rotas/usuarios.js"
 
 // Tela de Login
 
+window.ocultarSenha = function () {
+    const senha = document.getElementById("senha")
+    const olho = document.getElementById("olho")
+
+    olho.style.opacity = "0"
+
+    setTimeout(() => {
+
+        if (senha.type === "password") {
+            senha.type = "text"
+            olho.src = "./img/Eye.png"
+        } else {
+            senha.type = "password"
+            olho.src = "./img/Closed Eye.png"
+        }
+
+        olho.style.opacity = "1"
+
+    }, 200)
+}
+
 function validarEmailESenha(email, senha) {
     if (email === "") {
         Swal.fire({

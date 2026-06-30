@@ -43,10 +43,13 @@
                     <div class="input-box">
                         <img src="./img/Lock.png" alt="Icone de cadeado">
                         <input type="text" maxlength="70" id="senha" placeholder="Digite sua senha">
+                        <button class="senha" onclick="ocultarSenha()">
+                            <img src="./img/Eye.png" alt="Opção de ocultar senha" id="olho">
+                        </button>
                     </div>
                 </div>
 
-                <button onclick="validarLogin()">ENTRAR</button>
+                <button onclick="validarLogin()" class="entrar">ENTRAR</button>
             </div>
         </div>
     </main>
