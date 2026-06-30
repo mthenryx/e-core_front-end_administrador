@@ -29,6 +29,7 @@ function validarEmailESenha(email, senha) {
 }
 
 window.validarLogin = async function () {
+
     const email = document.getElementById("email").value
     const senha = document.getElementById("senha").value
 

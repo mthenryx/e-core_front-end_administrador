@@ -144,58 +144,16 @@ h2 {
     transform: translateY(2px);
 }
 
-.atualizar {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border: none;
-    border-radius: 12px;
-    background-color: var(--color-9);
-
-}
-
-.deletar {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border: none;
-    border-radius: 12px;
-    background-color: var(--color-12);
-}
-
-.deletar:active, .atualizar:active {
-    transform: translateY(2px);
-}
-
-.atualizar img, .deletar img {
-    height: 95%;
-    width: auto;
-}
-
 .alcoolico, .naoAlcoolico {
     display: flex;
     gap: 20px;
 }
 
-.carrossel-wrapper {
-    width: 700px;
+.wrapperAlcoolico, .wrapperNaoAlcoolico {
+    max-width: 1100px;
+    margin: 0 30px 25px;
+    padding: 20px 10px;
     overflow: hidden;
-    display: flex;
-    align-items: center;
-}
-
-.carrossel-track {
-    display: flex;
-    gap: 20px;
-    transition: transform 0.3s ease;
-    will-change: transform;
-}
-
-.carrossel {
-    display: flex;
-    gap: 20px;
-    overflow: hidden;
-    width: 700px; 
 }
 
 .box-drink {
@@ -206,7 +164,7 @@ h2 {
     align-items: center;
     height: 150px;
     gap: 15px;
-    width: 200px;
+    width: 100%;
     background-color: var(--color-13);
     border-top-right-radius: 10px;
     border-top-left-radius: 10px;
@@ -221,7 +179,8 @@ h2 {
 }
 
 .box-drink img {
-    height: 100px;
+    margin-top: 10px;
+    height: 90px;
     width: auto;
 }
 
@@ -235,16 +194,18 @@ h2 {
     gap: 10px;
     background-color: var(--color-1);
     height: auto;
-    width: 200px;
+    width: 100%;
     border-bottom-right-radius: 10px;
     border-bottom-left-radius: 10px;
 }
 
 .info h6{
+    text-align: center;
     color: var(--color-9);
 }
 
 .info h5{
+    text-align: center;
     font-size: 16px;
     color: var(--color-11);
 }
@@ -299,13 +260,27 @@ h2 {
     gap: 10px;
 }
 
+.card-list {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+}
+
+.swiper-slide {
+    display: flex;
+    justify-content: center;
+    height: auto;
+}
+
 .card {
+    box-sizing: border-box;
+    width: 100%;
+    max-width: 240px;
+    min-height: 330px;
+    padding: 20px;
     display: flex;
     flex-direction: column;
     justify-content: center;
-    padding: 20px;
-    min-height: 330px;
-    width: 180px;
 }
 
 footer {
@@ -318,4 +293,254 @@ footer {
     font-size: 13px;
     color: var(--color-6);
     background: linear-gradient(to right, #0C3D6B, #042C53);
+}
+
+/* Cards e carrossel de bebidas */
+.container {
+    overflow: hidden;
+}
+
+.secao-bebidas {
+    margin-top: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.filtros-bebidas {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(120px, 1fr));
+    gap: 20px;
+    max-width: 940px;
+}
+
+.animation {
+    width: 100%;
+    height: 40px;
+    border-radius: 10px;
+    border: 1px solid var(--color-9);
+    background-color: var(--color-1);
+    color: var(--color-9);
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: 0.2s ease;
+}
+
+.animation:hover,
+.selecao {
+    color: var(--color-1);
+    background-color: var(--color-9);
+    transform: translateY(1px);
+}
+
+.wrapperAlcoolico,
+.wrapperNaoAlcoolico,
+.carrossel-bebidas {
+    width: min(100%, 980px);
+    margin: 0;
+    padding: 20px 42px 42px;
+    overflow: hidden;
+    position: relative;
+}
+
+.card-list {
+    padding-bottom: 50px;
+    margin: 0;
+    list-style: none;
+}
+
+.swiper-slide {
+    height: auto;
+    display: flex;
+    justify-content: center;
+}
+
+.card-bebida {
+    width: 100%;
+    max-width: 310px;
+    min-height: 470px;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    border: 1px solid #B9E5FF;
+    border-radius: 16px;
+    background-color: var(--color-1);
+}
+
+.box-drink {
+    width: 100%;
+    height: 225px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    background-color: var(--color-13);
+    border-radius: 0;
+}
+
+.box-drink img {
+    max-width: 76%;
+    max-height: 160px;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+    display: block;
+}
+
+.box-drink span {
+    position: absolute;
+    left: 16px;
+    bottom: 10px;
+    color: var(--color-9);
+    font-size: 26px;
+    font-weight: 800;
+    line-height: 1;
+}
+
+.info {
+    box-sizing: border-box;
+    width: 100%;
+    min-height: 245px;
+    padding: 16px 20px 14px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    background-color: var(--color-1);
+    border-radius: 0;
+}
+
+.info h6 {
+    margin: 0;
+    color: var(--color-9);
+    font-size: 11px;
+    font-weight: 800;
+    text-align: center;
+}
+
+.info h5 {
+    margin: 0;
+    color: var(--color-11);
+    font-size: 22px;
+    font-weight: 800;
+    line-height: 1.15;
+    text-align: center;
+}
+
+.info p {
+    max-width: 235px;
+    min-height: 58px;
+    margin: 0;
+    color: var(--color-7);
+    font-size: 14px;
+    line-height: 1.15;
+    text-align: center;
+    display: -webkit-box;
+    -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.valor {
+    color: var(--color-8);
+    font-size: 26px;
+    font-weight: 800;
+    line-height: 1;
+}
+
+.box-botoes {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    margin-top: auto;
+}
+
+.bt-atualizar,
+.bt-deletar {
+    width: 40px;
+    height: 25px;
+    border-radius: 999px;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.bt-atualizar {
+    background-color: var(--color-9);
+}
+
+.bt-deletar {
+    background-color: var(--color-14);
+}
+
+.bt-atualizar img,
+.bt-deletar img {
+    width: 14px;
+    height: 14px;
+    object-fit: contain;
+}
+
+.card-vazio {
+    width: 100%;
+    max-width: 310px;
+    min-height: 180px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px dashed #B9E5FF;
+    border-radius: 16px;
+    color: var(--color-7);
+    background-color: var(--color-1);
+    font-weight: 700;
+    text-align: center;
+}
+
+.carrossel-bebidas .swiper-button-prev,
+.carrossel-bebidas .swiper-button-next {
+    color: var(--color-9);
+    padding: 10px;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background-color: var(--color-1);
+    box-shadow: 0 4px 12px rgba(12, 61, 107, 0.12);
+}
+
+.carrossel-bebidas .swiper-button-prev::after,
+.carrossel-bebidas .swiper-button-next::after {
+    font-size: 14px;
+    font-weight: 800;
+}
+
+.carrossel-bebidas .swiper-button-disabled {
+    opacity: 0.25;
+}
+
+.carrossel-bebidas .swiper-pagination-bullet-active {
+    background-color: var(--color-9);
+}
+
+@media (max-width: 900px) {
+    .filtros-bebidas {
+        grid-template-columns: repeat(2, minmax(120px, 1fr));
+    }
+
+    .wrapperAlcoolico,
+    .wrapperNaoAlcoolico,
+    .carrossel-bebidas {
+        padding-inline: 34px;
+    }
+}
+
+@media (max-width: 520px) {
+    .filtros-bebidas {
+        grid-template-columns: 1fr;
+    }
+
+    .card-bebida {
+        max-width: 290px;
+    }
 }

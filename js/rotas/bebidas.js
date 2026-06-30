@@ -14,7 +14,7 @@ export async function getBuscarBebidas (id) {
     return response.json()
 }
 
-export async function postBebidas (bebida) {
+export async function postBebidas (bebida, jwt) {
     const options = {
         method: "POST",
         headers: {
