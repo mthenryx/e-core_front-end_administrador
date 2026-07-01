@@ -756,6 +756,183 @@ footer {
     cursor: pointer;
 }
 
+/* Cards e carrossel de usuários */
+
+.spaceCardsUsuarios {
+    margin-top: 24px;
+    display: flex;
+    justify-content: center;
+}
+
+.wrapperUsuarios {
+    width: min(100%, 980px);
+}
+
+.card-usuario {
+    box-sizing: border-box;
+    width: 100%;
+    max-width: 176px;
+    min-height: 200px;
+    padding: 22px 14px 18px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 14px;
+    border: 1px solid #B9E5FF;
+    border-radius: 16px;
+    background-color: var(--color-1);
+}
+
+.box-foto-usuario {
+    width: 64px;
+    height: 64px;
+    flex-shrink: 0;
+    border-radius: 50%;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--color-13);
+}
+
+.box-foto-usuario img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.info-usuario {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+.info-usuario h5 {
+    margin: 0;
+    color: var(--color-11);
+    font-size: 14px;
+    font-weight: 800;
+    text-transform: uppercase;
+    text-align: center;
+}
+
+.info-usuario p {
+    margin: 0;
+    max-width: 150px;
+    color: var(--color-7);
+    font-size: 12px;
+    text-align: center;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+/* Tela de alterar cadastro */
+
+.sessao-cadastro {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.formulario-cadastro {
+    width: 100%;
+    align-self: center;
+    max-width: 500px;
+    height: 300px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    background-color: var(--color-1);
+    border-radius: 15px;
+    padding: 10px;
+}
+
+.formulario-cadastro hr {
+    border: none;
+    border-radius: 20px;
+    width: auto;
+    height: 2px;
+    background-color: #F0F4F8;
+}
+
+.topico-informacoes {
+    color: var(--color-3);
+    font-weight: bold;
+    font-size: 16px;
+    margin-top: 10px;
+}
+
+.label-nome,
+.label-email,
+.label-senha {
+    display: flex;
+    flex-direction: column;
+    font-size: 14px;
+    font-weight: bold;
+    gap: 5px;
+    color: #555555;
+}
+
+.input-nome,
+.input-email,
+.input-senha {
+    width: 100%;
+    height: 35px;
+    padding: 0 15px;
+    border: 1px solid #C8DDEF;
+    border-radius: 12px;
+    box-sizing: border-box;
+}
+
+.spaceBotoes {
+    margin-top: 40px;
+    margin-bottom: 80px;
+    align-self: center;
+    display: flex;
+    width: 60vw;
+    gap: 20px;
+    justify-content: space-between;
+    margin-right: 25px;
+}
+
+.buttonDesctar,
+.buttonAdicionar {
+    height: 40px;
+    width: 110px;
+    border: none;
+    border-radius: 15px;
+    font-weight: 500;
+    flex-shrink: 0;
+    white-space: nowrap;
+    transition: transform 0.1s ease, filter 0.1s ease;
+    cursor: pointer;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+}
+
+.buttonDesctar {
+    color: var(--color-12);
+    background-color: var(--color-1);
+}
+
+.buttonAdicionar {
+    color: var(--color-1);
+    background-color: var(--color-3);
+}
+
+.buttonDesctar:hover,
+.buttonAdicionar:hover {
+    filter: brightness(1.05);
+}
+
+.buttonDesctar:active,
+.buttonAdicionar:active {
+    transform: scale(0.95);
+    filter: brightness(0.9);
+}
+
 @media (max-width: 900px) {
     .filtros-bebidas {
         grid-template-columns: repeat(2, minmax(120px, 1fr));
@@ -788,5 +965,9 @@ footer {
 
     .card-bebida {
         max-width: 290px;
+    }
+
+    .card-usuario {
+        max-width: 220px;
     }
 }
