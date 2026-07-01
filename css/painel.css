@@ -16,6 +16,7 @@
 }
 
 body {
+    overflow-x: hidden;
     display: flex;
     flex-direction: column;
     font-family: "Inter", sans-serif;
@@ -290,6 +291,7 @@ h2 {
 }
 
 footer {
+    text-align: center;
     padding: 30px;
     justify-content: center;
     align-items: center;
@@ -343,8 +345,9 @@ footer {
 .wrapperAlcoolico,
 .wrapperNaoAlcoolico,
 .carrossel-bebidas {
-    width: min(100%, 980px);
-    margin: 0;
+    width: 100%;
+    max-width: 980px;
+    margin: 0 auto;
     padding: 20px 42px 42px;
     overflow: hidden;
     position: relative;
@@ -532,11 +535,11 @@ footer {
 /* Tela de inserir bebida*/
 
 .bebidaCadastroGridDois {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 22px;
-  max-width: 710px;
-  margin-bottom: 18px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 22px;
+    max-width: 710px;
+    margin-bottom: 18px;
 }
 
 .bebidaCadastroPreviewImg {
@@ -953,8 +956,24 @@ footer {
         grid-template-columns: 1fr;
     }
 
+    .card-bebida {
+        max-width: 70%;
+        margin-left: 12vw;
+    }
+
     .bebidaCadastroSelect {
         max-width: none;
+    }
+
+    .card-usuario {
+        max-width: 70%;
+        margin-left: 11vw;
+    }
+        
+    .formulario-cadastro {
+        width: 90%;
+        margin-top: 50px;
+        margin-right: 8vw;
     }
 }
 
@@ -964,10 +983,57 @@ footer {
     }
 
     .card-bebida {
-        max-width: 290px;
+        max-width: 91.5%;
+        margin-left: 0px;
     }
 
     .card-usuario {
-        max-width: 220px;
+        max-width: 92%;
+        margin-left: 0px;
+    }
+
+    main {
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .carrossel-bebidas .swiper-button-next {
+        transform: translateX(-30px);
+    }
+    
+    .funcionalidades {
+        width: 93%;
+        display: flex;
+        flex-direction: row;
+        margin-top: 0px;
+    }
+
+    .container {
+        width: 100%;
+    }
+
+    .frase {
+        font-size: 12px;
+    }
+
+    .animation {
+        width: 92%;
+    }
+
+    .bebidaCadastroSubtitulo {
+        font-size: 12px;
+    }
+
+    .bebidaCadastroCardTitulo {
+        font-size: 14px;
+    }
+
+    .bebidaCadastroBox {
+        width: 92%;
+        margin: 0;
+    }
+
+    .swiper-slide {
+        width: 90%;
     }
 }
